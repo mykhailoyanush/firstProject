@@ -37,7 +37,7 @@ window.addEventListener('DOMContentLoaded', function(){
 
 //Timer
 
-let deadline='2019-06-19';
+let deadline='2019-07-19';
 
 function getTimeRemaining(endTime) {
     let t = Date.parse(endTime)-Date.parse(new Date()),
@@ -51,7 +51,7 @@ function getTimeRemaining(endTime) {
         'minutes' : minutes,
         'seconds': seconds
     };
-};
+}
 
 function setClock(id, endTime){
     let timer=document.getElementById(id),
@@ -79,3 +79,26 @@ function setClock(id, endTime){
 };
 
 setClock('timer',deadline);
+
+//Modal
+
+var openDialog = function(){
+    overlay.style.display = 'block';
+    this.classList.add('more-splash');
+    document.body.style.overflow='hidden';
+}
+var closeDialog= function(){
+    overlay.style.display = 'none';
+    this.classList.remove('more-splash');
+    document.body.style.overflow='';
+}
+let more = document.querySelector('.more'),
+    overlay = document.querySelector('.overlay'),
+    close = document.querySelector('.popup-close'),
+    description = document.querySelectorAll('.description-btn');
+
+more.addEventListener('click', openDialog);
+for(let i=0; i<description.length; i++){
+    +description[i].addEventListener('click', openDialog);
+}
+close.addEventListener('click', closeDialog);
