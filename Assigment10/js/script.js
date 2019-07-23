@@ -102,3 +102,27 @@ for(let i=0; i<description.length; i++){
     +description[i].addEventListener('click', openDialog);
 }
 close.addEventListener('click', closeDialog);
+
+class Options{
+    constructor(height, width, bg, fontSize, textAlign){
+        this.height = height;
+        this.width = width;
+        this.bg = bg;
+        this.fontSize = fontSize;
+        this.textAlign = textAlign;
+    }
+    creatDiv(){
+        let element = document.getElementsByClassName('main-block');
+
+        let div =document.createElement('div');
+        div.style.width=this.width;
+        div.style.height=this.height;
+        div.style.background=this.bg;
+        div.style.fontSize = this.fontSize;
+        div.innerHTML=this.textAlign;
+        element[0].appendChild(div);
+    }
+}
+const newDiv = new Options('200px','200px','red','10px','My First Element');
+
+newDiv.creatDiv();
