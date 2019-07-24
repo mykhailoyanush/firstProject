@@ -37,7 +37,7 @@ window.addEventListener('DOMContentLoaded', function(){
 
 //Timer
 
-let deadline='2019-07-19';
+let deadline='2019-07-29';
 
 function getTimeRemaining(endTime) {
     let t = Date.parse(endTime)-Date.parse(new Date()),
@@ -103,7 +103,55 @@ for(let i=0; i<description.length; i++){
 }
 close.addEventListener('click', closeDialog);
 
-class Options{
+let message = {
+    loading: "Loading",
+    success: "Thanks. We call you soon!",
+    failure: "Something goes wrong"
+}
+
+let form = document.querySelector('.main-form'),
+    input = document.getElementsByTagName('input'),
+    statusMessage = document.createElement('div');
+
+statusMessage.classList.add('status');
+
+form.addEventListener('submit', function(event){
+    event.preventDefault();
+    form.appendChild(statusMessage);
+
+    let request = new XMLHttpRequest();
+
+    request.open('POST','server.php');
+    request.setRequestHeader('Content-type','application/json; charset=utf-8');
+
+    let formData = new FormData(form);
+
+    let obj ={};
+
+    formData.forEach(function(value, key){
+        obj[key]=value;
+    });
+
+    let json =JSON.stringify(obj);
+
+    request.send(json);
+
+    request.addEventListener('readystatechange',function(){
+        if(request.readyState<4){
+            statusMessage.innerHTML = message.loading;
+        }else if(request.readyState ==4 && request.status==200){
+            statusMessage.innerHTML = message.success;
+        }else{
+            statusMessage.innerHTML = message.failure;
+        }
+    });
+
+    for(let i=0;i<input.length;i++){
+        input[i].value="";
+    }
+});
+
+/*class Options{
     constructor(height, width, bg, fontSize, textAlign){
         this.height = height;
         this.width = width;
@@ -125,4 +173,4 @@ class Options{
 }
 const newDiv = new Options('200px','200px','red','10px','My First Element');
 
-newDiv.creatDiv();
+newDiv.creatDiv();*/
