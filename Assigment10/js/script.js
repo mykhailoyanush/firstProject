@@ -158,26 +158,53 @@ elem.addEventListener('submit', function(event){
 sendForm(form);
 sendForm(formBottom);
 
-/*class Options{
-    constructor(height, width, bg, fontSize, textAlign){
-        this.height = height;
-        this.width = width;
-        this.bg = bg;
-        this.fontSize = fontSize;
-        this.textAlign = textAlign;
-    }
-    creatDiv(){
-        let element = document.getElementsByClassName('main-block');
+//slider
 
-        let div =document.createElement('div');
-        div.style.width=this.width;
-        div.style.height=this.height;
-        div.style.background=this.bg;
-        div.style.fontSize = this.fontSize;
-        div.innerHTML=this.textAlign;
-        element[0].appendChild(div);
+let slideIndex =3,
+    slides = document.querySelectorAll('.slider-item'),
+    prev = document.querySelector('.prev'),
+    next = document.querySelector('.next'),
+    dotsWrap = document.querySelector('.slider-dots'),
+    dots = document.querySelectorAll('.dot');
+showSlides(slideIndex);
+
+function showSlides(n){
+    if(n>slides.length){
+        slideIndex=1;
+    } 
+    if(n<1){
+        slideIndex=slides.length;
     }
+
+    slides.forEach((item)=>item.style.display='none');
+
+    dots.forEach((item)=>item.classList.remove('dot-active'));
+
+    slides[slideIndex - 1].style.display='block';
+    dots[slideIndex - 1].classList.add('dot-active');
+
 }
-const newDiv = new Options('200px','200px','red','10px','My First Element');
 
-newDiv.creatDiv();*/
+function plusSlide(n){
+    showSlides(slideIndex+=n);
+}
+
+function currentSlide(n){
+    showSlides(slideIndex=n);
+}
+
+prev.addEventListener('click',function(){
+    plusSlide(-1);
+});
+
+next.addEventListener('click', function(){
+    plusSlide(1);
+});
+
+dotsWrap.addEventListener('click', function(event){
+    for(let i=0; i < dots.length+1; i++){
+        if(event.target.classList.contains('dot')&&event.target ==dots[i-1]){
+            currentSlide(i);
+        }
+    }
+});

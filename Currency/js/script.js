@@ -15,7 +15,7 @@ inputRub.addEventListener('input', () => {
 
             request.onreadystatechange=function(){
                 if(request.readyState<4){
-                    data.responce=JSON.parse(request.response);
+                    data.responce=JSON.parse(request.response); 
                     resolve();
                 } else if (request.readyState === 4) {
                     if (request.status == 200 && request.status < 300) {
